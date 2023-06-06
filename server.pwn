@@ -5,6 +5,8 @@
 #define                 MAX_GANG_ZONES      (1024)
 #define                 MAX_OBJECTS         (2000)
 #define      		MAX_PLAYER_NAME      (24)
+
+// I don't know what it is to see like that
 #define   		MAX_VEHICLES        (2000)
 
 /*
