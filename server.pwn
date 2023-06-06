@@ -4,8 +4,8 @@
 #define                 MAX_MENUS           (Menu:128)
 #define                 MAX_GANG_ZONES      (1024)
 #define                 MAX_OBJECTS         (2000)
-#define      			MAX_PLAYER_NAME      (24)
-#define   				MAX_VEHICLES        (2000)
+#define      		MAX_PLAYER_NAME      (24)
+#define   		MAX_VEHICLES        (2000)
 
 /*
 
