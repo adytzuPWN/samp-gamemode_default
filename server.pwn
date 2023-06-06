@@ -1,15 +1,12 @@
-//---- define ----//
+// define
 #define                 MAX_PLAYERS         (1000)
-
 #define                 MAX_ACTORS          (1000)
-
 #define                 MAX_MENUS           (Menu:128)
-
 #define                 MAX_GANG_ZONES      (1024)
-
 #define                 MAX_OBJECTS         (2000)
-
 #define      			MAX_PLAYER_NAME      (24)
+#define   				MAX_VEHICLES        (2000)
+
 /*
 
 - includes
@@ -17,17 +14,21 @@
 */
 #include <a_samp>
 
+//#include   "namefoldermodules/constant-all.pwn"
+
 main()
 {
     print("(server.pwn) --> started.");
+	printf(">>> MAX_PLAYERS: %i", MAX_PLAYERS);
+	printf(">>> MAX_ACTORS: %i", MAX_ACTORS);
 }
 
 public OnGameModeInit()
 {
-	SetGameModeText("My first SA-MP gamemode!");
-	AddPlayerClass(0, 2495.3547, -1688.2319, 13.6774, 351.1646, WEAPON_AK47, 320, WEAPON_KATANA, 1, WEAPON_DEAGLE, 200);
-	AddStaticVehicleEx(522, 2493.7583, -1683.6482, 12.9099, 270.8069, 1, 1, 150, 0);
-	return 1;
+    SetGameModeText("My first SA-MP gamemode!");
+    AddPlayerClass(0, CLASS_POS_X, CLASS_POS_Y, CLASS_POS_Z, CLASS_ANGLE, CLASS_WEAPON_1, AMMO_1, CLASS_WEAPON_2, AMMO_2, CLASS_WEAPON_3, AMMO_3);
+    AddStaticVehicleEx(VEHICLE_MODEL, VEHICLE_POS_X, VEHICLE_POS_Y, VEHICLE_POS_Z, VEHICLE_ANGLE, VEHICLE_COLOR_1, VEHICLE_COLOR_2, VEHICLE_RESPAWN_TIME, VEHICLE_ADD_SIREN);
+    return 1;
 }
 
 public OnGameModeExit()
@@ -48,12 +49,12 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	SetPlayerPos(playerid, 217.8511, -98.4865, 1005.2578);
-	SetPlayerFacingAngle(playerid, 113.8861);
-	SetPlayerInterior(playerid, 15);
-	SetPlayerCameraPos(playerid, 215.2182, -99.5546, 1006.4);
-	SetPlayerCameraLookAt(playerid, 217.8511, -98.4865, 1005.2578);
-	return 1;
+    SetPlayerPos(playerid, PLAYER_POS_X, PLAYER_POS_Y, PLAYER_POS_Z);
+    SetPlayerFacingAngle(playerid, PLAYER_ANGLE);
+    SetPlayerInterior(playerid, PLAYER_INTERIOR);
+    SetPlayerCameraPos(playerid, PLAYER_POS_X - 2.6329, PLAYER_POS_Y - 1.0681, PLAYER_POS_Z + 1.1422);
+    SetPlayerCameraLookAt(playerid, PLAYER_POS_X, PLAYER_POS_Y, PLAYER_POS_Z);
+    return 1;
 }
 
 public OnPlayerSpawn(playerid)
@@ -69,7 +70,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    return 1;
+	return 1;
 }
 
 public OnPlayerExitVehicle(playerid, vehicleid)
@@ -79,7 +80,7 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 
 public OnVehicleSpawn(vehicleid)
 {
-    return 1;
+	return 1;
 }
 
 public OnVehicleDeath(vehicleid, killerid)
@@ -92,14 +93,12 @@ public OnPlayerRequestSpawn(playerid)
 	return 1;
 }
 
-public OnPlayerCommandText(playerid, cmdtext[])
-{
-	return 1;
-}
-
 public OnPlayerText(playerid, text[])
 {
-	return 1;
+    new PlayerTextChat[128];
+    format(PlayerTextChat, sizeof(PlayerTextChat), "(%d) %s", playerid, text);
+    SendPlayerMessageToAll(playerid, PlayerTextChat);
+    return 1;
 }
 
 public OnPlayerUpdate(playerid)
@@ -129,7 +128,7 @@ public OnPlayerLeaveCheckpoint(playerid)
 
 public OnPlayerEnterRaceCheckpoint(playerid)
 {
-    return 1;
+	return 1;
 }
 
 public OnPlayerLeaveRaceCheckpoint(playerid)
@@ -137,9 +136,9 @@ public OnPlayerLeaveRaceCheckpoint(playerid)
 	return 1;
 }
 
-public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float: amount, weaponid, bodypart)
+public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid, bodypart)
 {
-    return 1;
+	return 1;
 }
 
 public OnActorStreamIn(actorid, forplayerid)
@@ -164,7 +163,11 @@ public OnPlayerSelectedMenuRow(playerid, row)
 
 public OnPlayerExitedMenu(playerid)
 {
-	return 1;
+	/*
+	- you have this here if you need it
+	TogglePlayerControllable(playerid, 1); // unfreezes the player when exiting a menu
+	*/
+    return 1;
 }
 
 public OnClientCheckResponse(playerid, actionid, memaddr, retndata)
@@ -234,7 +237,7 @@ public OnPlayerStreamOut(playerid, forplayerid)
 
 public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
-	return 1;
+    return 1;
 }
 
 public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
@@ -252,19 +255,8 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
     return 1;
 }
 
-/*
-public OnScriptCash(playerid, amount, source)
-{
-	- I put the OnScriptCash callback because I don't know if it works on the 'samp' server, I think it works on the open.mp server
-	return 1;
-}
-*/
-
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
-	/*
-	- I set you to visit the full server when you click on the map.
-	*/
     SetPlayerPosFindZ(playerid, fX, fY, fZ);
     return 1;
 }
