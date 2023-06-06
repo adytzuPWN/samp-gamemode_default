@@ -7,7 +7,7 @@
 #define      		MAX_PLAYER_NAME      (24)
 
 // I don't know what it is to see like that
-#define   		MAX_VEHICLES        (2000)
+#define   		 MAX_VEHICLES        (2000)
 
 /*
 
